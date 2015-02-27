@@ -14,7 +14,7 @@ def get_all():
 
 @app.route(BASE_URL + 'songs/<string:song_id>', methods=['GET'])
 def get_one(song_id):
-    return jsonify(store.get_one(song_id).get_ful())
+    return jsonify(store.get_one(song_id).get_full())
 
 
 @app.route(BASE_URL + 'search', methods=['GET'])
