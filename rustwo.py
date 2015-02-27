@@ -1,6 +1,7 @@
 import os
 import pickle
 import json
+from flask import url_for
 
 
 class Chords:
@@ -25,7 +26,14 @@ class Song:
         in_chords = self.chords.lower().find(query) != -1
         return in_title or in_chords
 
-    def get_dict(self):
+    def get_small(self):
+        return {
+            'id': self.id,
+            'title': self.title,
+            'uri': url_for('get_one', song_id=self.id, _external=True)
+        }
+
+    def get_full(self):
         return {
             'id': self.id,
             'title': self.title,
