@@ -27,9 +27,9 @@ class Song:
 
     def get_dict(self):
         return {
-            'id' : self.id,
-            'title' : self.title,
-            'chords' : self.chords
+            'id': self.id,
+            'title': self.title,
+            'chords': self.chords
         }
 
 
@@ -47,7 +47,11 @@ class Store:
                 self.data = []
                 data = json.load(data_file)
                 for obj in data:
-                    self.data.append(Song(obj['id'], obj['title'], obj['chords']))
+                    self.data.append(Song(
+                        obj['id'],
+                        obj['title'],
+                        obj['chords']
+                    ))
         return self.data
 
     def get_all(self):

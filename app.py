@@ -7,11 +7,6 @@ store = rustwo.Store('songs.json')
 BASE_URL = '/api/v1.0/'
 
 
-@app.route(BASE_URL)
-def index():
-    return "Hello world!"
-
-
 @app.route(BASE_URL + 'songs', methods=['GET'])
 def get_all():
     return jsonify(songs=[song.get_dict() for song in store.get_all()])
