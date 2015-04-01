@@ -1,5 +1,6 @@
 import os
 import json
+import re
 from flask import url_for
 
 
@@ -9,6 +10,8 @@ class Chords(object):
     but it will eventually parse and highlight the actual chords in the text
     as well.
     '''
+    replacement = r'<span class="chord">\1</span>\7'
+
     @staticmethod
     def search(store, query):
         '''
@@ -25,6 +28,53 @@ class Chords(object):
         if not data:
             return False
         return [song for song in data.songs if song.matches(query)]
+
+    @staticmethod
+    def parse(chords):
+        '''
+        Parses a string for chords and surrounds them with a span tag
+
+        Args:
+          chords (str) Chords string
+
+        Retuns:
+          String with span tags
+        '''
+        return re.sub(Chords.get_regex('find'), replace_inner, chords)
+
+    @staticmethod
+    def get_regex(regex):
+        '''
+        Helper method to have the regexes in one place
+
+        Args:
+          regex (str) Can be 'find' or 'is'
+
+        Returns:
+          Regex string
+        '''
+        if regex == 'find':
+            return '([ABCDEFG][#b]?\*?m?(aj7?)?(aug)?[256719]?1?(add([2469])?)?(sus[24]?)?)(.)'
+        elif regex == 'is':
+            return '([ABCDEFG][#b]?\*?m?(aj7?)?(aug)?[256719]?1?(add([2469])?)?(sus[24]?)?)([^a-zA-Z:])'
+        return ''
+
+
+def replace_inner(chord):
+    '''
+    Callback for chords replacement
+
+    Args:
+      chord (str) Chord string
+
+    Returns:
+      String with span tag
+    '''
+    match = re.search(Chords.get_regex('is'), chord.group(0))
+    if match:
+        regex = Chords.get_regex('find')
+        return re.sub(regex, Chords.replacement, match.group(0))
+    return chord.group(0)
 
 
 class Song(object):
@@ -47,7 +97,7 @@ class Song(object):
         '''
         self.id = id
         self.title = title
-        self.chords = chords
+        self.chords = chords or ''
 
     def matches(self, query):
         '''
@@ -85,7 +135,7 @@ class Song(object):
         return {
             'id': self.id,
             'title': self.title,
-            'chords': self.chords
+            'chords': Chords.parse(self.chords)
         }
 
 
@@ -117,10 +167,11 @@ class Store(object):
                 self.data = []
                 data = json.load(data_file)
                 for obj in data:
+                    chords = obj['chords'] or ''
                     self.data.append(Song(
                         obj['id'],
                         obj['title'],
-                        obj['chords']
+                        chords.replace('\n', ' \n')
                     ))
         return self.data
 
