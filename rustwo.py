@@ -47,7 +47,7 @@ class Song(object):
         '''
         self.id = id
         self.title = title
-        self.chords = chords
+        self.chords = chords or ''
 
     def matches(self, query):
         '''
