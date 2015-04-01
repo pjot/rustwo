@@ -11,7 +11,7 @@ class Chords:
         data = store.get_all()
         if not data:
             return False
-        return [song for song in data if song.matches(query)]
+        return [song for song in data.songs if song.matches(query)]
 
 
 class Song:
@@ -28,7 +28,6 @@ class Song:
 
     def get_small(self):
         return {
-            'id': self.id,
             'title': self.title,
             'uri': url_for('get_one', song_id=self.id, _external=True)
         }
@@ -63,10 +62,18 @@ class Store:
         return self.data
 
     def get_all(self):
-        return self.get_data()
+        return ResultSet(self.get_data())
 
     def get_one(self, id):
         for song in self.get_data():
             if song.id == id:
                 return song
         return False
+
+class ResultSet:
+
+    def __init__(self, songs):
+        self.songs = songs;
+
+    def as_small(self):
+        return [song.get_small() for song in self.songs]

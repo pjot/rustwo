@@ -1,0 +1,78 @@
+.song {
+    width: 400px;
+    padding: 15px;
+    padding-bottom: 10px;
+    margin: 5px;
+    background-color: #ddd;
+    font-size: 24px;
+    font-family: Helvetica;
+    font-weight: 200;
+    text-decoration: none;
+    color: #333;
+    display: block;
+}
+
+.song:hover {
+    background-color: #eee;
+}
+
+#songs {
+    margin-top: 75px;
+}
+
+#filler {
+    margin: 0;
+    top: 0;
+    height: 10px;
+    background-color: white;
+    width: 440px;
+    position: fixed;
+}
+
+#filler_below {
+    margin: 0;
+    top: 70px;
+    height: 10px;
+    background-color: white;
+    width: 440px;
+    position: fixed;
+}
+
+#search {
+    margin: 0;
+    top: 10;
+    position: fixed;
+    width: 440px;
+    height: 60px;
+    background-color: #333;
+}
+
+#search input {
+    padding: 15px;
+    font-size: 24px;
+    font-family: Helvetica;
+    font-weight: 200;
+    margin: 5px;
+    width: 430px;
+    border: 0;
+    background-color: #444;
+    color: #eee;
+    padding-bottom: 10px;
+}
+
+#title {
+    font-family: Helvetica;
+    font-size: 24px;
+    background-color: #ccc;
+    padding: 15px 10px 10px;
+}
+#chords {
+    font-family: monospace;
+    white-space: pre;
+    background-color: #eee;
+    padding: 10px;
+}
+#song {
+    margin-top: 80px;
+    width: 600px;
+}
