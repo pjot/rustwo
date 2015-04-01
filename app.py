@@ -1,8 +1,8 @@
-#!flask/bin/python
+#!/usr/bin/env python
 from flask import Flask, request, jsonify
 import rustwo
 
-app = Flask(__name__)
+app = Flask(__name__, static_url_path='')
 store = rustwo.Store('songs.json')
 BASE_URL = '/rust/api/v1/'
 
@@ -22,5 +22,10 @@ def search():
     songs = rustwo.Chords.search(store, request.args.get('q'))
     return jsonify(songs=rustwo.ResultSet(songs).as_small())
 
+
+@app.route('/', methods=['GET'])
+def index():
+    return app.send_static_file('index.html')
+
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(debug=True, host='0.0.0.0')

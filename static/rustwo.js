@@ -21,7 +21,7 @@ Rustwo = function (search_field, songs) {
 Rustwo.prototype.drawCurrentSong = function () {
     $('#title').html(this.current_song.title);
     $('#chords').html(this.current_song.chords);
-    this.song.slideDown(200);
+    this.song.show();
 };
 
 Rustwo.prototype.init = function () {
@@ -35,7 +35,7 @@ Rustwo.prototype.bindEvents = function () {
 
 Rustwo.prototype.loadSongs = function (callback) {
     $.ajax({
-        url : 'http://localhost:5000/rust/api/v1/songs',
+        url : '/rust/api/v1/songs',
         dataType : 'json',
         context : this,
         success : function (data) {
@@ -73,7 +73,7 @@ Rustwo.prototype.performSearch = function () {
     var search = this.search_field.val().replace(/ /g, '+');
     this.songs.find('.song').data('visited', false);
     $.ajax({
-        url : 'http://localhost:5000/rust/api/v1/search?q=' + search, 
+        url : '/rust/api/v1/search?q=' + search, 
         dataType : 'json',
         context : this,
         success : function (data) {
