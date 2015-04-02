@@ -88,7 +88,67 @@ Rustwo.prototype.performSearch = function () {
             });
         }
     });
+}
+
+Rustwo.transposeSong = function (direction) {
+    $('#chords .chord').each(function () {
+        var chord_element = $(this);
+        chord_element.html(Chord.transpose(chord_element.html(), direction));
+    });
 };
+
+Chord = {
+    map : {
+        '+1' : {
+            'Eb' : 'E',
+            'E'  : 'F',
+            'F#' : 'G',
+            'F'  : 'F#',
+            'Gb' : 'G',
+            'G#' : 'A',
+            'G'  : 'G#',
+            'Ab' : 'A',
+            'A#' : 'C',
+            'A'  : 'Bb',
+            'Bb' : 'B',
+            'B'  : 'C',
+            'C#' : 'D',
+            'C'  : 'C#',
+            'D#' : 'E',
+            'D'  : 'D#'
+        },
+        '-1' : {
+            'Eb' : 'D',
+            'E'  : 'D#',
+            'F#' : 'F',
+            'F'  : 'E',
+            'Gb' : 'F',
+            'G#' : 'G',
+            'G'  : 'F#',
+            'Ab' : 'G',
+            'A#' : 'A',
+            'A'  : 'G#',
+            'Bb' : 'A',
+            'B'  : 'Bb',
+            'C#' : 'C',
+            'C'  : 'B',
+            'D#' : 'D',
+            'D'  : 'C#'
+        }
+    }
+};
+
+Chord.transpose = function (chord, direction) {
+    var map = Chord.map[direction];
+    for (i in map)
+    {
+        if (chord.match(new RegExp(i)))
+        {
+            return chord.replace(new RegExp(i), map[i]);
+        }
+    }
+    return chord;
+}
 
 $(document).ready(function () {
     window.rust = new Rustwo('#search', '#songs');
