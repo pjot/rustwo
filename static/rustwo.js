@@ -31,6 +31,10 @@ Rustwo.prototype.init = function () {
 Rustwo.prototype.bindEvents = function () {
     $('.song').on('click', Rustwo.prototype.loadSong.bind(this));
     this.search_field.on('keyup', Rustwo.prototype.performSearch.bind(this));
+    $('.transpose').on('click', function () {
+        Rustwo.transposeSong($(this).attr('rel'));
+        return false;
+    });
 };
 
 Rustwo.prototype.loadSongs = function (callback) {

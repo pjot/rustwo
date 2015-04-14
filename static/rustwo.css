@@ -17,7 +17,7 @@
 }
 
 #songs {
-    margin-top: 75px;
+    margin-top: 80px;
 }
 
 #filler {
@@ -60,12 +60,29 @@
     padding-bottom: 10px;
 }
 
-#title {
+#song_top {
     font-family: Helvetica;
     font-size: 24px;
     background-color: #ccc;
     padding: 15px 10px 10px;
 }
+
+.transpose {
+    color: #eee;
+    text-decoration: none;
+    padding-left: 5px;
+    padding-right: 5px;
+    float: right;
+}
+
+.transpose img {
+    height: 16px;
+}
+
+#title {
+    display: inline;
+}
+
 #chords {
     font-family: monospace;
     white-space: pre;
@@ -75,6 +92,7 @@
 #song {
     margin-top: 80px;
     width: 600px;
+    display: none;
 }
 .chord {
     color: #228844;
